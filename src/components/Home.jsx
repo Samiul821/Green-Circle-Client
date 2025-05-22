@@ -6,14 +6,15 @@ const Home = () => {
   const gardeners = useLoaderData();
 
   return (
-    <div>
-      <div>
-        <h1 className="text-3xl text-center">Featured Gardeners</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-          {gardeners.map((gardener) => (
-            <Gardener key={gardener._id} gardener={gardener}></Gardener>
-          ))}
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-green-200 py-10 px-[5%] lg:px-[10%]">
+      <h1 className="text-4xl font-extrabold text-green-900 text-center mb-10">
+        Featured Gardeners
+      </h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {gardeners.map((gardener) => (
+          <Gardener key={gardener._id} gardener={gardener} />
+        ))}
       </div>
     </div>
   );

@@ -13,32 +13,42 @@ const Gardener = ({ gardener }) => {
   } = gardener;
 
   return (
-    <div className="max-w-sm mx-auto bg-gradient-to-br from-green-700 to-lime-600 rounded-3xl shadow-xl overflow-hidden border border-green-900 text-white hover:shadow-2xl transition-all duration-300">
-      {/* Image */}
-      <div className="w-full h-56 overflow-hidden">
+    <div className="rounded-xl overflow-hidden shadow-lg border border-green-200 bg-white transition hover:shadow-2xl">
+      {/* Top Banner with Image */}
+      <div className="relative h-48 bg-green-200">
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover brightness-90"
+          className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 to-transparent"></div>
+        <div className="absolute bottom-3 left-4 text-white z-10">
+          <h2 className="text-xl md:text-2xl font-bold font-serif">{name}</h2>
+          <p className="text-sm">{gender}, {age} yrs</p>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5 space-y-3">
-        <h2 className="text-2xl playfair font-bold">{name}</h2>
-        <div className="text-sm opacity-90">
-          <p>🧓 Age: {age} | 🚻 Gender: {gender}</p>
-          <p>💍 Status: {status}</p>
+      {/* Details Section */}
+      <div className="p-5 space-y-2 text-green-800">
+        <div className="flex justify-between text-sm font-medium">
+          <span>💍 Status: <strong>{status}</strong></span>
+          <span>💡 Tips: <strong>{totalSharedTips}</strong></span>
         </div>
 
-        <div className="text-sm nunito font-medium space-y-1">
-          <p>🌱 Experience: <span className="font-bold">{experiences}</span></p>
-          <p>💡 Shared Tips: {totalSharedTips}</p>
-        </div>
+        <p className="text-sm">
+          🌱 Experience: <span className="font-semibold">{experiences}</span>
+        </p>
 
-        <p className="text-sm nunito text-green-100 italic">{otherInfo}</p>
+        {otherInfo && (
+          <p className="text-xs italic text-green-700 mt-2 border-t pt-2 border-green-100">
+            {otherInfo}
+          </p>
+        )}
+      </div>
 
-        <button className="mt-3 px-4 py-2 bg-white text-green-800 font-semibold rounded-xl hover:bg-lime-100 transition shadow-md">
+      {/* Action Button */}
+      <div className="px-5 pb-5">
+        <button className="w-full py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-semibold">
           View Profile
         </button>
       </div>
