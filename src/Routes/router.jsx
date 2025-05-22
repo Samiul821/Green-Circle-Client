@@ -8,6 +8,9 @@ import MyTips from "../Pages/MyTips";
 import AuthLaout from "../Layout/AuthLaout";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
+import PrivateRoute from "../Provider/PrivateRoute";
+import BrowseTips from "../Pages/BrowseTips";
+import Loading from "../Pages/Loading";
 
 const router = createBrowserRouter([
   {
@@ -18,18 +21,31 @@ const router = createBrowserRouter([
         index: true,
         element: <Home></Home>,
         loader: () => fetch("http://localhost:3000/gardeners"),
-      },
-      {
-        path: "/gardentip",
-        element: <GardenTip></GardenTip>,
+        hydrateFallbackElement: <Loading></Loading>
       },
       {
         path: "/explore",
         element: <ExploreGarden></ExploreGarden>,
       },
       {
+        path: '/browserTips',
+        element: <BrowseTips></BrowseTips>
+      },
+      {
+        path: "/gardentip",
+        element: (
+          <PrivateRoute>
+            <GardenTip></GardenTip>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/mytips",
-        element: <MyTips></MyTips>,
+        element: (
+          <PrivateRoute>
+            <MyTips></MyTips>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -42,9 +58,9 @@ const router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
-        path: '/auth/signUp',
-        element: <SignUp></SignUp>
-      }
+        path: "/auth/signUp",
+        element: <SignUp></SignUp>,
+      },
     ],
   },
 ]);
