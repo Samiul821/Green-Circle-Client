@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { Tooltip } from 'react-tooltip'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -89,12 +90,16 @@ const Navbar = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           {user && (
-            <img
+            <>
+             <img
               src={user.photoURL}
               alt="Profile"
               className="w-9 h-9 rounded-full border-2 border-white object-cover"
-              title={user.displayName}
+              data-tooltip-id="profile-tooltip"
+              data-tooltip-content={user.displayName}
             />
+            <Tooltip id="profile-tooltip" place="top" />
+            </>
           )}
           {user ? (
             <button

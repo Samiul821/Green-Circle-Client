@@ -29,7 +29,9 @@ const router = createBrowserRouter([
       },
       {
         path: '/browserTips',
-        element: <BrowseTips></BrowseTips>
+        element: <BrowseTips></BrowseTips>,
+        loader: () => fetch('http://localhost:3000/gardenTips'),
+        hydrateFallbackElement: <Loading></Loading>
       },
       {
         path: "/gardentip",

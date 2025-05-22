@@ -9,7 +9,7 @@ const PrivateRoute = ({children}) => {
     const location = useLocation();
 
     if(loading){
-        return <Loading />
+        return null;
     }
     if(user && user.email){
         return children;
