@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:3000/gardeners"),
+        loader: () => fetch("https://green-circle-server-indol.vercel.app/gardeners"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       {
         path: "/browserTips",
         element: <BrowseTips></BrowseTips>,
-        loader: () => fetch("http://localhost:3000/gardenTips"),
+        loader: () => fetch("https://green-circle-server-indol.vercel.app/gardenTips"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/gardenTips/${params.id}`),
+          fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/gardenTips/${params.id}`),
+          fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
       },
     ],

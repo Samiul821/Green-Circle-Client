@@ -33,7 +33,7 @@ const GardenTip = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    fetch("http://localhost:3000/gardenTips", {
+    fetch("https://green-circle-server-indol.vercel.app/gardenTips", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

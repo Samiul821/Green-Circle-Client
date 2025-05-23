@@ -19,7 +19,7 @@ const Banner = () => {
   const [slides, setSlides] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/slides")
+    fetch("https://green-circle-server-indol.vercel.app/slides")
       .then((res) => res.json())
       .then((data) => setSlides(data));
   }, []);

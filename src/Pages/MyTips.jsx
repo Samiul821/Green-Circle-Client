@@ -10,7 +10,7 @@ const MyTips = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:3000/gardenTips?email=${user.email}`)
+    fetch(`https://green-circle-server-indol.vercel.app/gardenTips?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyTips(data);
@@ -33,7 +33,7 @@ const MyTips = () => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/gardenTips/${_id}`, {
+        fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

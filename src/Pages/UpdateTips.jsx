@@ -23,7 +23,7 @@ const UpdateTips = () => {
     const updatedTip = Object.fromEntries(formData.entries());
 
     // send the updated data to the server
-    fetch(`http://localhost:3000/gardenTips/${_id}`, {
+    fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

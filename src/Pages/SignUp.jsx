@@ -52,7 +52,7 @@ const SignUp = () => {
         };
 
         // save user profile to the database
-        fetch("http://localhost:3000/users", {
+        fetch("https://green-circle-server-indol.vercel.app/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
