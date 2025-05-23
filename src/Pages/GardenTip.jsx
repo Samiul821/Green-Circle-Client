@@ -192,6 +192,7 @@ const GardenTip = () => {
               </label>
               <input
                 type="text"
+                name="email"
                 readOnly
                 value={user?.email || ""}
                 className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
@@ -199,15 +200,12 @@ const GardenTip = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="displayName"
-                className="block text-base font-semibold text-green-900 mb-3 raleway"
-              >
+              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
                 Your Name
               </label>
               <input
                 type="text"
-                id="displayName"
+                name="displayName"
                 readOnly
                 value={user?.displayName || ""}
                 className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
