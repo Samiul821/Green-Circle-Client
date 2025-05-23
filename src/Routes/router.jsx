@@ -65,7 +65,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/updateTip/:id',
+        path: "/updateTip/:id",
         element: (
           <PrivateRoute>
             <UpdateTips></UpdateTips>
@@ -73,7 +73,8 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`http://localhost:3000/gardenTips/${params.id}`),
-      }
+        hydrateFallbackElement: <Loading></Loading>,
+      },
     ],
   },
   {
