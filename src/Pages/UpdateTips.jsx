@@ -1,67 +1,56 @@
 import React, { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
-import { toast } from "react-toastify";
+import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const GardenTip = () => {
+const UpdateTips = () => {
   const { user } = use(AuthContext);
+  const {
+    _id,
+    title,
+    plantType,
+    difficulty,
+    category,
+    description,
+    image,
+    availability,
+  } = useLoaderData();
 
-  const handleSubmit = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
-
-    const title = form.title.value.trim();
-    const plantType = form.plantType.value.trim();
-    const difficulty = form.difficulty.value;
-    const category = form.category.value;
-    const description = form.description.value.trim();
-    const image = form.image.value.trim();
-    const availability = form.availability.value;
-
-    if (
-      !title ||
-      !plantType ||
-      !difficulty ||
-      !category ||
-      !description ||
-      !image ||
-      !availability
-    ) {
-      toast.error("Please fill all the required fields!");
-      return;
-    }
-
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const updatedTip = Object.fromEntries(formData.entries());
 
-    fetch("http://localhost:3000/gardenTips", {
-      method: "POST",
+    // send the updated data to the server
+    fetch(`http://localhost:3000/gardenTips/${_id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(updatedTip),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          toast.success("Tip submitted successfully!");
-          form.reset();
-        } else {
-          toast.error("Failed to submit tip.");
+    .then((res) => res.json())
+    .then(data => {
+        if(data.modifiedCount) {
+            Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Coffee updated successfully.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        toast.error("An error occurred while submitting the tip.");
-      });
+    })
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-green-100 via-green-200 to-green-300 py-16 px-6 sm:px-12 lg:px-20 nunito">
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
         <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
-          Share a Garden Tip
+          Update Garden Tip
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleUpdate} className="space-y-8">
           {/* Title */}
           <div>
             <label className="block text-base font-semibold text-green-900 mb-3 raleway">
@@ -70,6 +59,7 @@ const GardenTip = () => {
             <input
               type="text"
               name="title"
+              defaultValue={title}
               required
               placeholder="How I Grow Tomatoes Indoors"
               className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
@@ -84,6 +74,7 @@ const GardenTip = () => {
             <input
               type="text"
               name="plantType"
+              defaultValue={plantType}
               required
               className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
             />
@@ -99,7 +90,7 @@ const GardenTip = () => {
                 name="difficulty"
                 required
                 className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
-                defaultValue=""
+                defaultValue={difficulty}
               >
                 <option value="" disabled>
                   Select difficulty
@@ -118,7 +109,7 @@ const GardenTip = () => {
                 name="category"
                 required
                 className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
-                defaultValue=""
+                defaultValue={category}
               >
                 <option value="" disabled>
                   Select category
@@ -139,6 +130,7 @@ const GardenTip = () => {
             </label>
             <textarea
               name="description"
+              defaultValue={description}
               rows="6"
               required
               className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition resize-none"
@@ -154,6 +146,7 @@ const GardenTip = () => {
             <input
               type="url"
               name="image"
+              defaultValue={image}
               required
               placeholder="https://example.com/image.jpg"
               className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
@@ -169,7 +162,7 @@ const GardenTip = () => {
               name="availability"
               required
               className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
-              defaultValue=""
+              defaultValue={availability}
             >
               <option value="" disabled>
                 Select availability
@@ -214,7 +207,7 @@ const GardenTip = () => {
               type="submit"
               className="inline-block bg-green-700 hover:bg-green-800 text-white font-bold px-14 py-4 rounded-full shadow-xl transition duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-6 focus:ring-green-400"
             >
-              Submit Tip
+              Updated
             </button>
           </div>
         </form>
@@ -223,4 +216,4 @@ const GardenTip = () => {
   );
 };
 
-export default GardenTip;
+export default UpdateTips;

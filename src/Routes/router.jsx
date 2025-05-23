@@ -13,6 +13,7 @@ import BrowseTips from "../Pages/BrowseTips";
 import Loading from "../Pages/Loading";
 import TipDetails from "../Pages/TipDetails";
 import ErrorPage from "../Pages/ErrorPage";
+import UpdateTips from "../Pages/UpdateTips";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,16 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: '/updateTip/:id',
+        element: (
+          <PrivateRoute>
+            <UpdateTips></UpdateTips>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/gardenTips/${params.id}`),
+      }
     ],
   },
   {
