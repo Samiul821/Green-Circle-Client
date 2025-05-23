@@ -2,6 +2,8 @@ import React from "react";
 import { useLoaderData } from "react-router-dom";
 import Gardener from "./Gardener";
 import Banner from "./Banner";
+import OurExpert from "./OurExpert";
+import OurAchievements from "./OurAchievements";
 
 const Home = () => {
   const gardeners = useLoaderData();
@@ -18,6 +20,8 @@ const Home = () => {
           <Gardener key={gardener._id} gardener={gardener} />
         ))}
       </div>
+      <OurExpert />
+      <OurAchievements />
     </div>
   );
 };
