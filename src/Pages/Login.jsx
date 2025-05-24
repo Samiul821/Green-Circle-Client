@@ -3,9 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const { login, passwordReset } = use(AuthContext);
+  const { login, passwordReset, googleLogin } = use(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -39,6 +40,20 @@ const Login = () => {
     } else {
       toast.error("Email address is required");
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        const redirectPath = location?.state?.from?.pathname || "/";
+        navigate(redirectPath, { replace: true });
+        toast.success("Google Sign In Successful");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+      });
   };
 
   return (
@@ -150,6 +165,20 @@ const Login = () => {
             Sign In
           </motion.button>
         </form>
+
+        {/* Google Sign In Button */}
+        <div className="mt-6">
+          <motion.button
+            onClick={handleGoogleSignIn}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className="w-full flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-green-300"
+          >
+            <FcGoogle size={20} />
+            Sign in with Google
+          </motion.button>
+        </div>
 
         <p className="text-center text-gray-600 mt-8 text-sm">
           Don't have an account?{" "}

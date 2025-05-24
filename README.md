@@ -1,12 +1,29 @@
-# React + Vite
+# Green Circle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live Site URL
+[https://green-circle-bdbd6.web.app/](https://green-circle-bdbd6.web.app/)  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Fully responsive and mobile-friendly design  
+- User authentication and profile management  
+- Real-time data synchronization using Firebase/Backend  
+- Smooth animations and modern UI using React and Tailwind CSS  
+- Secure and clean code architecture with best practices  
+- Dynamic content rendering and private routes for authorized users  
+- Easy to customize and extend for future features  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Description
+
+Green Circle is a modern web application designed to provide a seamless user experience for its visitors. It incorporates responsive design principles to work flawlessly across devices and screen sizes. The platform offers user authentication, profile management, and secure data handling, making it ideal for community interaction or service management.
+
+Built with React, Tailwind CSS, and a powerful backend (Firebase/Node.js), Green Circle ensures fast performance and scalability. The project focuses on clean code, accessibility, and smooth animations for an engaging user interface.
+
+This project is a solid foundation for anyone looking to build professional-grade web applications with a modern tech stack.
+
+---
+
+*Created by Samiul*

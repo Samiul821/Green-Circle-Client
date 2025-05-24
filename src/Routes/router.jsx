@@ -14,6 +14,8 @@ import Loading from "../Pages/Loading";
 import TipDetails from "../Pages/TipDetails";
 import ErrorPage from "../Pages/ErrorPage";
 import UpdateTips from "../Pages/UpdateTips";
+import TermsConditions from "../Pages/TermsConditions";
+import PrivacyPolicy from "../Pages/PrivacyPolicy";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +80,14 @@ const router = createBrowserRouter([
           fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
       },
+      {
+        path: '/terms',
+        element: <TermsConditions></TermsConditions>
+      },
+      {
+        path: '/policy',
+        element: <PrivacyPolicy></PrivacyPolicy>
+      }
     ],
   },
   {

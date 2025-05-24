@@ -10,15 +10,18 @@ const MyTips = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`https://green-circle-server-indol.vercel.app/gardenTips?email=${user.email}`)
+
+    console.log("Fetching tips for:", user.email); // Debug
+    fetch(
+      `https://green-circle-server-indol.vercel.app/gardenTips?email=${user.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
+        console.log("Received tips:", data); // Debug
         setMyTips(data);
       })
-      .catch((error) => {
-        console.error("Error fetching my tips:", error);
-      });
-  }, [user]);
+      .catch((err) => console.error("Error fetching my tips:", err));
+  }, [user?.email]);
 
   const handleDelete = (_id) => {
     console.log(_id);
@@ -30,12 +33,14 @@ const MyTips = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    })
-    .then((result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${_id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://green-circle-server-indol.vercel.app/gardenTips/${_id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -47,7 +52,7 @@ const MyTips = () => {
             console.error("Error deleting tip:", error);
           });
       }
-    })
+    });
   };
 
   return (
@@ -95,7 +100,10 @@ const MyTips = () => {
                 >
                   Update
                 </Link>
-                <button onClick={() => handleDelete(tip._id)} className="bg-rose-500 hover:bg-rose-600 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition">
+                <button
+                  onClick={() => handleDelete(tip._id)}
+                  className="bg-rose-500 hover:bg-rose-600 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition"
+                >
                   Delete
                 </button>
               </div>
