@@ -30,6 +30,9 @@ const router = createBrowserRouter([
       {
         path: "/explore",
         element: <ExploreGarden></ExploreGarden>,
+        loader: () =>
+          fetch("https://green-circle-server-indol.vercel.app/allGardeners"),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "/browserTips",
