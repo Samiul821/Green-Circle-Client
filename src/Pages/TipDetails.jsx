@@ -15,7 +15,7 @@ const TipDetails = () => {
     image,
     category,
     availability,
-    likes = 0, // Default to 0
+    likes = 0, 
   } = tip;
 
   const [liked, setLiked] = useState(false);

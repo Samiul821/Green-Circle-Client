@@ -6,55 +6,55 @@ const experts = [
   {
     name: "Dr. Nafisa Rahman",
     role: "Environmental Scientist",
-    img: "https://i.ibb.co/ZVh01GM/expert1.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/hRMy71XH/download-9.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "10+ years",
   },
   {
     name: "Engr. Akash Hossain",
     role: "Sustainable Architect",
-    img: "https://i.ibb.co/4djWjKf/expert2.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/qYhJJhqm/download-10.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "8+ years",
   },
   {
     name: "Tania Islam",
     role: "Green Energy Specialist",
-    img: "https://i.ibb.co/0M1P3gc/expert3.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/hFDxmPws/download-11.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "6+ years",
   },
   {
     name: "Prof. Mahmudul Karim",
     role: "Climate Policy Advisor",
-    img: "https://i.ibb.co/zSddXTv/expert4.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/NdyzKjzm/download-12.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "15+ years",
   },
   {
     name: "Sarah Noor",
     role: "Environmental Educator",
-    img: "https://i.ibb.co/yR7jBWC/expert5.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/wNn9HszR/download-13.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "7+ years",
   },
   {
     name: "Imran Chowdhury",
     role: "Renewable Energy Engineer",
-    img: "https://i.ibb.co/fFtXNNc/expert6.jpg",
-    facebook: "#",
-    linkedin: "#",
-    twitter: "#",
+    img: "https://i.ibb.co/szSFC35/download-14.jpg",
+    facebook: "https://www.facebook.com/smsamiul890",
+    linkedin: "https://www.linkedin.com/in/samiul-islam-40942a34a",
+    twitter: "https://x.com/SmSamiul890",
     experience: "9+ years",
   },
 ];
@@ -98,13 +98,13 @@ const OurExpert = () => {
               {expert.experience}
             </p>
             <div className="flex justify-center mt-4 space-x-4 text-green-600 text-xl">
-              <a href={expert.facebook} aria-label="Facebook">
+              <a href={expert.facebook} target="_blank" aria-label="Facebook">
                 <FaFacebook className="hover:text-green-800 transition" />
               </a>
-              <a href={expert.linkedin} aria-label="LinkedIn">
+              <a href={expert.linkedin} target="_blank" aria-label="LinkedIn">
                 <FaLinkedin className="hover:text-green-800 transition" />
               </a>
-              <a href={expert.twitter} aria-label="Twitter">
+              <a href={expert.twitter} target="_blank" aria-label="Twitter">
                 <FaTwitter className="hover:text-green-800 transition" />
               </a>
             </div>
