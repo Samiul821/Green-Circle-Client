@@ -2,9 +2,8 @@
 
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --defalt
+   themes: light --default, dark --prefersdark;
 }
-
 
 .playfair {
   font-family: 'Playfair Display', serif;

@@ -9,7 +9,7 @@ const ErrorPage = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="min-h-screen bg-gradient-to-tr from-green-50 via-green-100 to-green-200 flex flex-col items-center justify-center px-6">
+      <div className="min-h-screen  flex flex-col items-center justify-center px-6">
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

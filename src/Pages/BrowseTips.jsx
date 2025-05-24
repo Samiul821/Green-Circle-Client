@@ -16,7 +16,7 @@ const BrowseTips = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-green-50 via-green-100 to-green-200 py-12 px-[5%] lg:px-[10%]">
+    <div className="min-h-screen  py-12 px-[5%] lg:px-[10%]">
       {/* Title */}
       <motion.h1
         initial={{ y: -20, opacity: 0 }}

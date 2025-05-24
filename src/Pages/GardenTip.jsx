@@ -56,7 +56,7 @@ const GardenTip = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-green-100 via-green-200 to-green-300 py-16 px-6 sm:px-12 lg:px-20 nunito">
+    <div className="min-h-screen  py-16 px-6 sm:px-12 lg:px-20 nunito">
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
         <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
           Share a Garden Tip

@@ -57,7 +57,7 @@ const TipDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-green-50 via-green-100 to-green-200 flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen  flex items-center justify-center px-6 py-12">
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

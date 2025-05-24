@@ -56,7 +56,7 @@ const MyTips = () => {
   };
 
   return (
-    <div className="px-[5%] lg:px-[10%] py-12 bg-gradient-to-b from-green-200 via-green-50 to-white min-h-screen">
+    <div className="px-[5%] lg:px-[10%] py-12  min-h-screen">
       <h1 className="text-4xl playfair font-bold text-green-800 mb-10 text-center">
         My Gardening Tips
       </h1>

@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-indigo-50 via-purple-100 to-pink-50 flex items-center justify-center px-6">
+    <div className="min-h-screen  flex items-center justify-center px-6">
       <motion.div
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

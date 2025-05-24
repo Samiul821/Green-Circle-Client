@@ -4,7 +4,7 @@ import { FaLeaf } from "react-icons/fa";
 
 const Loading = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-100 to-white">
+    <div className="min-h-screen flex items-center justify-center ">
       <div className="flex flex-col items-center space-y-6">
         {/* Spinning Circle */}
         <motion.div

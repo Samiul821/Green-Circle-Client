@@ -10,7 +10,7 @@ const Home = () => {
   const gardeners = useLoaderData();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-green-200 py-10 px-[5%] lg:px-[10%]">
+    <div className="min-h-screen  py-10 px-[5%] lg:px-[10%]">
       <Banner />
       <h1 className="text-4xl raleway font-extrabold text-green-900 text-center mb-10">
         Featured Gardeners

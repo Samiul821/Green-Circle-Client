@@ -6,7 +6,7 @@ const ExploreGarden = () => {
   const data = useLoaderData();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-200 py-12 px-[5%] lg:px-[10%]">
+    <div className="min-h-screen  py-12 px-[5%] lg:px-[10%]">
       <h1 className="text-5xl font-extrabold text-green-900 text-center mb-16 drop-shadow-md">
         🌱 Meet Our Gardeners
       </h1>
