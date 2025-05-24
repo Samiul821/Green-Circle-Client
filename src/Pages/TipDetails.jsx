@@ -1,9 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const TipDetails = () => {
   const tip = useLoaderData();
+
+  const {
+    _id,
+    title,
+    plantType,
+    difficulty,
+    description,
+    image,
+    category,
+    availability,
+    likes = 0, // Default to 0
+  } = tip;
+
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
+
+  const handleLike = async () => {
+    if (liked) return;
+    try {
+      setLikeCount(likeCount + 1);
+      setLiked(true);
+
+      const res = await fetch(
+        `https://green-circle-server-indol.vercel.app/gardenTips/${_id}/like`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ increment: 1 }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to like tip");
+      }
+    } catch (err) {
+      toast.error("Failed to like tip. Please try again.", err);
+      setLikeCount(likeCount);
+      setLiked(false);
+    }
+  };
 
   if (!tip) {
     return (
@@ -12,19 +55,6 @@ const TipDetails = () => {
       </div>
     );
   }
-
-  const {
-    title,
-    plantType,
-    difficulty,
-    description,
-    image,
-    category,
-    availability,
-  } = tip;
-
-  const [liked, setLiked] = useState(false);
-  const toggleLike = () => setLiked(!liked);
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-green-50 via-green-100 to-green-200 flex items-center justify-center px-6 py-12">
@@ -97,14 +127,16 @@ const TipDetails = () => {
               <span>
                 <strong>Availability:</strong> {availability}
               </span>
+              <span>
+                <strong>Likes:</strong> {likeCount}
+              </span>
             </div>
 
             <p className="text-green-800 text-lg leading-relaxed mb-8">
               {description}
             </p>
-
             <motion.button
-              onClick={toggleLike}
+              onClick={handleLike}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`self-start px-8 py-3 rounded-full font-semibold text-white text-lg shadow-lg transition-colors duration-300
