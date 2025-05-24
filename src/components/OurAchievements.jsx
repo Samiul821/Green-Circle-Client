@@ -45,7 +45,7 @@ const OurAchievements = () => {
         {achievements.map((item, index) => {
           const { ref, inView } = useInView({
             threshold: 0.5,
-            triggerOnce: false, // এটা বারবার কাজ করবে
+            triggerOnce: false, 
           });
 
           return (

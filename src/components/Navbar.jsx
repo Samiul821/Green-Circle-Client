@@ -1,15 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from "react-tooltip";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const { user, logOut, loading } = useContext(AuthContext);
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -26,15 +41,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-green-600 text-white w-full shadow-md">
-      <div className="px-4 md:px-10 lg:px-24 py-4 flex justify-between items-center">
+    <nav className="bg-green-600 text-white w-full shadow-md relative">
+      <div className="px-[5%] lg:px-[10%] py-4 flex justify-between items-center">
         {/* Logo */}
         <NavLink
           to="/"
           className="text-3xl font-extrabold tracking-tight flex items-center gap-1"
         >
           <span className="hover:text-yellow-300 transition duration-200">
-            🌿 Green
+            Green
           </span>
           <span className="text-yellow-400">Circle</span>
         </NavLink>
@@ -88,26 +103,35 @@ const Navbar = () => {
         </ul>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          {user && (
-            <>
-             <img
-              src={user.photoURL}
-              alt="Profile"
-              className="w-9 h-9 rounded-full border-2 border-white object-cover"
-              data-tooltip-id="profile-tooltip"
-              data-tooltip-content={user.displayName}
-            />
-            <Tooltip id="profile-tooltip" place="top" />
-            </>
-          )}
+        <div className="hidden md:flex items-center gap-4 relative">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-white text-green-600 hover:bg-green-100 px-5 py-2 rounded-full shadow font-semibold transition"
-            >
-              Logout
-            </button>
+            <>
+              <img
+                src={user.photoURL}
+                alt="Profile"
+                className="w-9 h-9 rounded-full border-2 border-white object-cover cursor-pointer"
+                onClick={() => setShowDropdown(!showDropdown)}
+                data-tooltip-id="profile-tooltip"
+                data-tooltip-content={user.displayName}
+              />
+              <Tooltip id="profile-tooltip" place="top" />
+              {showDropdown && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-12 right-0 bg-white text-green-700 rounded shadow-lg w-40 z-50"
+                >
+                  <div className="px-4 py-2 border-b text-sm font-semibold">
+                    {user.displayName}
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 hover:bg-green-100 text-sm"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <NavLink
               to="/auth/login"
