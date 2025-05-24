@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const TipDetails = () => {
   const tip = useLoaderData();
@@ -58,6 +59,9 @@ const TipDetails = () => {
 
   return (
     <div className="min-h-screen  flex items-center justify-center px-6 py-12">
+      <Helmet>
+        <title>{title} | Green Circle</title>
+      </Helmet>
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

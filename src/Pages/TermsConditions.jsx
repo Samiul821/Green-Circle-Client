@@ -1,9 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const TermsConditions = () => {
   return (
     <div className="min-h-screen  text-gray-800 p-6 md:p-12">
+      <Helmet>
+        <title>Terms & Conditions | Green Circle</title>
+      </Helmet>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

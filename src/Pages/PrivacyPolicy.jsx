@@ -1,10 +1,14 @@
 import React from "react";
 
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen  text-gray-800 p-6 md:p-12">
+      <Helmet>
+        <title>Privacy Policy | Green Circle</title>
+      </Helmet>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const GardenTip = () => {
   const { user } = use(AuthContext);
@@ -57,6 +58,9 @@ const GardenTip = () => {
 
   return (
     <div className="min-h-screen  py-16 px-6 sm:px-12 lg:px-20 nunito">
+      <Helmet>
+        <title>Share a Garden Tip | Green Circle</title>
+      </Helmet>
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
         <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
           Share a Garden Tip

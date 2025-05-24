@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import TipRow from "../components/TipRow";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const BrowseTips = () => {
   const data = useLoaderData();
@@ -17,6 +18,9 @@ const BrowseTips = () => {
 
   return (
     <div className="min-h-screen  py-12 px-[5%] lg:px-[10%]">
+      <Helmet>
+        <title>Browse Tips | Green Circle</title>
+      </Helmet>
       {/* Title */}
       <motion.h1
         initial={{ y: -20, opacity: 0 }}

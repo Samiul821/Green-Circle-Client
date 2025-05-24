@@ -2,6 +2,7 @@ import React, { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const UpdateTips = () => {
   const { user } = use(AuthContext);
@@ -46,6 +47,9 @@ const UpdateTips = () => {
 
   return (
     <div className="min-h-screen  py-16 px-6 sm:px-12 lg:px-20 nunito">
+      <Helmet>
+        <title>Update Garden Tip | Green Circle</title>
+      </Helmet>
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
         <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
           Update Garden Tip

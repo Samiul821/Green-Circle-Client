@@ -4,6 +4,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const { createUser, updateUser, setUser, googleLogin } = use(AuthContext);
@@ -88,6 +89,9 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen  flex items-center justify-center p-6">
+      <Helmet>
+        <title>Sign Up | Green Circle</title>
+      </Helmet>
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

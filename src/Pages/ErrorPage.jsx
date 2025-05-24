@@ -4,12 +4,16 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { div } from "framer-motion/client";
 import Navbar from "../components/Navbar";
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
     <div>
       <Navbar></Navbar>
       <div className="min-h-screen  flex flex-col items-center justify-center px-6">
+        <Helmet>
+          <title>Page Not Found | Green Circle</title>
+        </Helmet>
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

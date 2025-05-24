@@ -5,12 +5,18 @@ import Banner from "./Banner";
 import OurExpert from "./OurExpert";
 import OurAchievements from "./OurAchievements";
 import TopTrending from "./TopTrending";
+import { Helmet } from "react-helmet-async";
+
+
 
 const Home = () => {
   const gardeners = useLoaderData();
 
   return (
     <div className="min-h-screen  py-10 px-[5%] lg:px-[10%]">
+      <Helmet>
+        <title>Home | Green Circle</title>
+      </Helmet>
       <Banner />
       <h1 className="text-4xl raleway font-extrabold text-green-900 text-center mb-10">
         Featured Gardeners

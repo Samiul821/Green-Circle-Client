@@ -1,12 +1,16 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import ExploreGardenes from "../components/ExploreGardenes";
+import { Helmet } from "react-helmet-async";
 
 const ExploreGarden = () => {
   const data = useLoaderData();
 
   return (
     <div className="min-h-screen  py-12 px-[5%] lg:px-[10%]">
+      <Helmet>
+        <title>Explore | Green Circle</title>
+      </Helmet>
       <h1 className="text-5xl font-extrabold text-green-900 text-center mb-16 drop-shadow-md">
         🌱 Meet Our Gardeners
       </h1>

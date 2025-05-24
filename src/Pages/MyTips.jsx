@@ -3,6 +3,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const MyTips = () => {
   const { user } = useContext(AuthContext);
@@ -11,16 +12,14 @@ const MyTips = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    console.log("Fetching tips for:", user.email); // Debug
+    console.log("Fetching tips for:", user.email);
     fetch(
       `https://green-circle-server-indol.vercel.app/gardenTips?email=${user.email}`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("Received tips:", data); // Debug
         setMyTips(data);
-      })
-      .catch((err) => console.error("Error fetching my tips:", err));
+      });
   }, [user?.email]);
 
   const handleDelete = (_id) => {
@@ -57,6 +56,14 @@ const MyTips = () => {
 
   return (
     <div className="px-[5%] lg:px-[10%] py-12  min-h-screen">
+      <Helmet>
+        <title>
+          {myTips.length > 0
+            ? "My Tips | Green Circle"
+            : "No Tips | Green Circle"}
+        </title>
+      </Helmet>
+
       <h1 className="text-4xl playfair font-bold text-green-800 mb-10 text-center">
         My Gardening Tips
       </h1>
