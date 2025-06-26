@@ -13,7 +13,7 @@ const Home = () => {
   const gardeners = useLoaderData();
 
   return (
-    <div className="min-h-screen bg-base-100 py-10 px-[5%] lg:px-[10%]">
+    <div className="min-h-screen py-10 px-[5%] lg:px-[10%]">
       <Helmet>
         <title>Home | Green Circle</title>
       </Helmet>
