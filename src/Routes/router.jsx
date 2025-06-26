@@ -16,6 +16,10 @@ import ErrorPage from "../Pages/ErrorPage";
 import UpdateTips from "../Pages/UpdateTips";
 import TermsConditions from "../Pages/TermsConditions";
 import PrivacyPolicy from "../Pages/PrivacyPolicy";
+import DashboardLayout from "../Layout/DashboardLayout";
+import Overview from "../components/Overview";
+import AllItems from "../Pages/Dashboard.jsx/AllItems";
+import MyItems from "../Pages/Dashboard.jsx/MyItems";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +30,8 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
-        loader: () => fetch("https://green-circle-server-indol.vercel.app/gardeners"),
+        loader: () =>
+          fetch("https://green-circle-server-indol.vercel.app/gardeners"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -39,7 +44,8 @@ const router = createBrowserRouter([
       {
         path: "/browserTips",
         element: <BrowseTips></BrowseTips>,
-        loader: () => fetch("https://green-circle-server-indol.vercel.app/gardenTips"),
+        loader: () =>
+          fetch("https://green-circle-server-indol.vercel.app/gardenTips"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -50,7 +56,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`),
+          fetch(
+            `https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`
+          ),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
@@ -77,17 +85,19 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`),
+          fetch(
+            `https://green-circle-server-indol.vercel.app/gardenTips/${params.id}`
+          ),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
-        path: '/terms',
-        element: <TermsConditions></TermsConditions>
+        path: "/terms",
+        element: <TermsConditions></TermsConditions>,
       },
       {
-        path: '/policy',
-        element: <PrivacyPolicy></PrivacyPolicy>
-      }
+        path: "/policy",
+        element: <PrivacyPolicy></PrivacyPolicy>,
+      },
     ],
   },
   {
@@ -101,6 +111,28 @@ const router = createBrowserRouter([
       {
         path: "/auth/signUp",
         element: <SignUp></SignUp>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: Overview,
+      },
+      {
+        path: "all-tips",
+        Component: AllItems,
+      },
+      {
+        path: "my-items",
+        Component: MyItems,
       },
     ],
   },

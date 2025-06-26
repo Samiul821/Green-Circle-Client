@@ -45,15 +45,54 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     googleLogin()
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
-        const redirectPath = location?.state?.from?.pathname || "/";
-        navigate(redirectPath, { replace: true });
-        toast.success("Google Sign In Successful");
+
+        const userProfile = {
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+
+        try {
+          // Check if user already exists
+          const checkRes = await fetch(
+            `https://green-circle-server-indol.vercel.app/users?email=${user.email}`
+          );
+          const existingUsers = await checkRes.json();
+
+          if (existingUsers.length === 0) {
+            // ইউজার নেই, তাই ইনসার্ট করো
+            const insertRes = await fetch(
+              "https://green-circle-server-indol.vercel.app/users",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userProfile),
+              }
+            );
+            const insertData = await insertRes.json();
+
+            if (insertData.insertedId) {
+              toast.success("User registered successfully!");
+            }
+          } else {
+            toast.info("Welcome back!");
+          }
+
+          // Redirect
+          const redirectPath = location?.state?.from?.pathname || "/";
+          navigate(redirectPath, { replace: true });
+        } catch (error) {
+          console.error(error);
+          toast.error("Failed to process user data");
+        }
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        toast.error(errorMessage);
+        toast.error(error.message);
       });
   };
 
