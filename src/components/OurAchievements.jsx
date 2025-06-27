@@ -37,7 +37,7 @@ const achievements = [
 
 const OurAchievements = () => {
   return (
-    <section className="py-16">
+    <section>
       <h2 className="text-4xl font-bold text-center mb-12">
         Our <span className="text-green-600">Achievements</span>
       </h2>

@@ -70,7 +70,7 @@ const cardVariants = {
 
 const OurExpert = () => {
   return (
-    <section className="py-16">
+    <section>
       <h2 className="text-4xl font-bold text-center text-green-800 mb-12">
         Meet Our Experts
       </h2>

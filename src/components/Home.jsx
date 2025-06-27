@@ -7,13 +7,11 @@ import OurAchievements from "./OurAchievements";
 import TopTrending from "./TopTrending";
 import { Helmet } from "react-helmet-async";
 
-
-
 const Home = () => {
   const gardeners = useLoaderData();
 
   return (
-    <div className="min-h-screen py-10 px-[5%] lg:px-[10%]">
+    <div className="min-h-screen space-y-16 py-16 px-[5%] lg:px-[10%]">
       <Helmet>
         <title>Home | Green Circle</title>
       </Helmet>
@@ -22,7 +20,7 @@ const Home = () => {
         Featured Gardeners
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {gardeners.map((gardener) => (
           <Gardener key={gardener._id} gardener={gardener} />
         ))}
