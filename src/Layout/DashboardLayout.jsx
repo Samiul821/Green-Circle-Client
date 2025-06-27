@@ -4,10 +4,12 @@ import { GrLogout } from "react-icons/gr";
 import { AiOutlineBars } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeContext"; // <-- Import your ThemeContext
 import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
   const { logOut } = useContext(AuthContext);
+  const { isDark } = useContext(ThemeContext); // <-- use isDark from context
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -27,16 +29,34 @@ const DashboardLayout = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  // ✅ Sidebar Content
+  // Sidebar content with dark mode classes
   const sidebarContent = (
-    <div className="flex flex-col justify-between h-full w-64 bg-gradient-to-tr from-green-100 via-green-50 to-green-200 shadow-lg z-50">
-      {/* Logo */}
-      <div className="bg-green-600 px-4 py-3 flex justify-between items-center">
+    <div
+      className={`flex flex-col justify-between h-full w-64 shadow-lg z-50 ${
+        isDark
+          ? "bg-gray-900 text-gray-300"
+          : "bg-gradient-to-tr from-green-100 via-green-50 to-green-200 text-gray-800"
+      }`}
+    >
+      {/* Logo & Close button */}
+      <div
+        className={`px-4 py-3 flex justify-between items-center ${
+          isDark ? "bg-gray-800" : "bg-green-600"
+        }`}
+      >
         <NavLink to="/" className="text-2xl font-bold flex gap-1">
-          <span className="text-white hover:text-yellow-400 transition">
+          <span
+            className={`${
+              isDark
+                ? "text-green-400 hover:text-yellow-400"
+                : "text-white hover:text-yellow-400"
+            } transition`}
+          >
             Green
           </span>
-          <span className="text-yellow-400">Circle</span>
+          <span className={`${isDark ? "text-yellow-400" : "text-yellow-400"}`}>
+            Circle
+          </span>
         </NavLink>
         <button className="lg:hidden text-white" onClick={toggleDrawer}>
           <IoMdClose size={24} />
@@ -46,70 +66,37 @@ const DashboardLayout = () => {
       {/* Navigation */}
       <div className="flex-1 px-3 py-4">
         <ul className="space-y-3">
-          <li>
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg font-medium transition ${
-                  isActive
-                    ? "bg-green-600 text-white font-bold"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`
-              }
-            >
-              Home
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to="/dashboard"
-              end
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg font-medium transition ${
-                  isActive
-                    ? "bg-green-600 text-white font-bold"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`
-              }
-            >
-              Overview
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to="all-tips"
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg font-medium transition ${
-                  isActive
-                    ? "bg-green-600 text-white font-bold"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`
-              }
-            >
-              All Garden Tips
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to="my-items"
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg font-medium transition ${
-                  isActive
-                    ? "bg-green-600 text-white font-bold"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`
-              }
-            >
-              My Items
-            </NavLink>
-          </li>
+          {[
+            { to: "/", label: "Home" },
+            { to: "/dashboard", label: "Overview" },
+            { to: "all-tips", label: "All Garden Tips" },
+            { to: "my-items", label: "My Items" },
+          ].map(({ to, label }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                end
+                className={({ isActive }) =>
+                  `block px-4 py-2 rounded-lg font-medium transition ${
+                    isActive
+                      ? isDark
+                        ? "bg-green-700 text-white font-bold"
+                        : "bg-green-600 text-white font-bold"
+                      : isDark
+                      ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      : "text-gray-700 hover:bg-gray-200"
+                  }`
+                }
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
-      <hr />
+
+      <hr className={isDark ? "border-gray-700" : "border-green-300"} />
+
       {/* Footer */}
       <div className="px-3 mb-4">
         <ul className="mt-4 space-y-3 px-3 mb-4">
@@ -119,7 +106,11 @@ const DashboardLayout = () => {
               className={({ isActive }) =>
                 `block px-4 py-2 rounded-lg font-medium transition ${
                   isActive
-                    ? "bg-blue-500 text-white"
+                    ? isDark
+                      ? "bg-blue-700 text-white"
+                      : "bg-blue-500 text-white"
+                    : isDark
+                    ? "text-gray-400 hover:bg-gray-800 hover:text-white"
                     : "text-gray-700 hover:bg-gray-200"
                 }`
               }
@@ -131,7 +122,11 @@ const DashboardLayout = () => {
           <li>
             <button
               onClick={handleLogout}
-              className="flex items-center w-full px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-300 transition"
+              className={`flex items-center w-full px-4 py-2 rounded-lg transition ${
+                isDark
+                  ? "text-gray-400 hover:bg-red-700 hover:text-red-400"
+                  : "text-gray-600 hover:bg-red-50 hover:text-red-600"
+              }`}
             >
               <GrLogout className="w-5 h-5" />
               <span className="ml-2 font-medium">Logout</span>
@@ -143,50 +138,71 @@ const DashboardLayout = () => {
   );
 
   return (
-    <div className="relative min-h-screen bg-green-100">
-      {/* ✅ Topbar (sm & md only) */}
-      <div className="bg-green-600 text-white flex justify-between items-center px-4 py-3 lg:hidden">
+    <div
+      className={`${
+        isDark ? "bg-gray-900 text-gray-300" : "bg-green-100 text-gray-800"
+      } relative min-h-screen`}
+    >
+      {/* Topbar for small devices */}
+      <div
+        className={`flex justify-between items-center px-4 py-3 lg:hidden ${
+          isDark ? "bg-gray-800 text-gray-300" : "bg-green-600 text-white"
+        }`}
+      >
         <NavLink
           to="/"
           className="text-2xl font-bold tracking-tight flex gap-1"
         >
-          <span className="text-white hover:text-yellow-400 transition">
+          <span
+            className={`${
+              isDark ? "text-green-400" : "text-white hover:text-yellow-400"
+            }`}
+          >
             Green
           </span>
           <span className="text-yellow-400">Circle</span>
         </NavLink>
         <button
           onClick={toggleDrawer}
-          className="p-2 rounded-md hover:bg-green-700 transition"
+          className={`p-2 rounded-md transition ${
+            isDark ? "hover:bg-gray-700" : "hover:bg-green-700"
+          }`}
         >
           <AiOutlineBars className="h-6 w-6" />
         </button>
       </div>
 
-      {/* ✅ Mobile Drawer Sidebar with smooth animation */}
+      {/* Mobile Drawer Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-green-50 shadow-lg z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 h-full w-64 shadow-lg z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
+        } ${
+          isDark ? "bg-gray-900 text-gray-300" : "bg-green-50 text-gray-800"
         }`}
       >
         {sidebarContent}
       </div>
 
-      {/* ✅ Backdrop when Drawer is open */}
+      {/* Backdrop */}
       {isDrawerOpen && (
-        <div
-          onClick={toggleDrawer}
-          className="fixed inset-0 z-40 lg:hidden"
-        ></div>
+        <div onClick={toggleDrawer} className="fixed inset-0 z-40 lg:hidden " />
       )}
 
-      {/* ✅ Desktop Sidebar (lg+) */}
-      <div className="hidden lg:flex fixed flex-col justify-between w-64 inset-y-0 left-0 bg-green-50 shadow-md z-10">
+      {/* Desktop Sidebar */}
+      <div
+        className={`hidden lg:flex fixed flex-col justify-between w-64 inset-y-0 left-0 shadow-md z-10 ${
+          isDark ? "bg-gray-900 text-gray-300" : "bg-green-50 text-gray-800"
+        }`}
+      >
         {sidebarContent}
       </div>
 
-      {/* ✅ Main Content Area */}
-      <div className="flex-1 lg:ml-64 p-5">
+      {/* Main Content */}
+      <div
+        className={`flex-1 lg:ml-64 p-5 transition-colors duration-300 ${
+          isDark ? "bg-gray-900 text-gray-300" : "bg-green-100 text-gray-800"
+        }`}
+      >
         <Outlet />
       </div>
     </div>

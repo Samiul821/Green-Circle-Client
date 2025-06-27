@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../../Provider/ThemeContext";
 
 const AllItems = () => {
+  const { isDark } = useContext(ThemeContext);
   const [items, setItems] = useState([]);
   const [difficulty, setDifficulty] = useState("All");
   const [loading, setLoading] = useState(true);
@@ -23,7 +25,11 @@ const AllItems = () => {
       : items.filter((tip) => tip.difficulty === difficulty);
 
   return (
-    <div className="min-h-screen py-4 lg:px-[5%]">
+    <div
+      className={`min-h-screen py-4 lg:px-[5%] ${
+        isDark ? "bg-gray-900" : "bg-gray-50"
+      }`}
+    >
       <Helmet>
         <title>All Items | Green Circle</title>
       </Helmet>
@@ -32,7 +38,9 @@ const AllItems = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="text-4xl font-extrabold text-center text-green-900 mb-6 font-serif"
+        className={`text-4xl font-extrabold text-center mb-6 font-serif ${
+          isDark ? "text-green-400" : "text-green-900"
+        }`}
       >
         All Garden Tips
       </motion.h1>
@@ -41,7 +49,11 @@ const AllItems = () => {
         <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className="px-5 py-2 rounded-lg border border-green-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 text-green-800 font-medium"
+          className={`px-5 py-2 rounded-lg border shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 font-medium ${
+            isDark
+              ? "border-gray-600 bg-gray-800 text-green-300"
+              : "border-green-300 text-green-800 bg-white"
+          }`}
         >
           <option value="All">All Difficulties</option>
           <option value="Easy">Easy</option>
@@ -50,28 +62,34 @@ const AllItems = () => {
         </select>
       </div>
 
-      <div className="relative max-w-full rounded-3xl shadow-lg bg-white overflow-hidden">
+      <div
+        className={`relative max-w-full rounded-3xl shadow-lg overflow-hidden ${
+          isDark ? "bg-gray-800" : "bg-white"
+        }`}
+      >
         {/* Scrollable container with fixed height */}
         <div className="overflow-auto h-[700px]">
-          <table className="w-full min-w-[600px] md:min-w-[650px] lg:min-w-[900px] divide-y divide-green-200">
-            <thead className="bg-green-700 text-white font-semibold font-serif sticky top-0 z-10 shadow-md">
+          <table
+            className={`w-full min-w-[600px] md:min-w-[650px] lg:min-w-[900px] divide-y ${
+              isDark ? "divide-gray-700" : "divide-green-200"
+            }`}
+          >
+            <thead
+              className={`sticky top-0 z-10 shadow-md font-semibold font-serif ${
+                isDark
+                  ? "bg-gray-900 text-green-400"
+                  : "bg-green-700 text-white"
+              }`}
+            >
               <tr>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
-                  Image
-                </th>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
-                  Title
-                </th>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
+                <th className="px-6 py-4 text-left text-sm uppercase">Image</th>
+                <th className="px-6 py-4 text-left text-sm uppercase">Title</th>
+                <th className="px-6 py-4 text-left text-sm uppercase">
                   Category
                 </th>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
-                  Likes
-                </th>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
-                  User
-                </th>
-                <th className="px-6 py-4 text-left text-sm uppercase bg-green-700">
+                <th className="px-6 py-4 text-left text-sm uppercase">Likes</th>
+                <th className="px-6 py-4 text-left text-sm uppercase">User</th>
+                <th className="px-6 py-4 text-left text-sm uppercase">
                   Action
                 </th>
               </tr>
@@ -93,7 +111,9 @@ const AllItems = () => {
                       hidden: { opacity: 0 },
                       visible: { opacity: 1 },
                     }}
-                    className="hover:bg-green-50 transition"
+                    className={`hover:bg-green-50 transition ${
+                      isDark ? "hover:bg-gray-700" : ""
+                    }`}
                   >
                     <td className="px-6 py-4">
                       <img
@@ -102,12 +122,32 @@ const AllItems = () => {
                         className="w-8 h-8 md:w-12 md:h-12 rounded-md object-cover shadow"
                       />
                     </td>
-                    <td className="px-6 py-4 max-w-xs truncate">
+                    <td
+                      className={`px-6 py-4 max-w-xs truncate ${
+                        isDark ? "text-green-300" : "text-gray-900"
+                      }`}
+                    >
                       {item.title}
                     </td>
-                    <td className="px-6 py-4">{item.category || "N/A"}</td>
-                    <td className="px-6 py-4">{item.likes || 0}</td>
-                    <td className="px-6 py-4">
+                    <td
+                      className={`px-6 py-4 ${
+                        isDark ? "text-green-400" : "text-gray-700"
+                      }`}
+                    >
+                      {item.category || "N/A"}
+                    </td>
+                    <td
+                      className={`px-6 py-4 ${
+                        isDark ? "text-green-400" : "text-gray-700"
+                      }`}
+                    >
+                      {item.likes || 0}
+                    </td>
+                    <td
+                      className={`px-6 py-4 ${
+                        isDark ? "text-green-400" : "text-gray-700"
+                      }`}
+                    >
                       {item.userEmail || item.email}
                     </td>
                     <td className="px-6 py-4">
@@ -124,7 +164,9 @@ const AllItems = () => {
                 <tr>
                   <td
                     colSpan="6"
-                    className="text-center text-green-700 font-semibold py-6"
+                    className={`text-center font-semibold py-6 ${
+                      isDark ? "text-green-400" : "text-green-700"
+                    }`}
                   >
                     No items found for selected difficulty.
                   </td>

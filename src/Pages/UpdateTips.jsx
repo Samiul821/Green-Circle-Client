@@ -1,11 +1,14 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeContext"; // ধরে নিলাম তুমি ThemeContext বানিয়েছো
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 const UpdateTips = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { isDark } = useContext(ThemeContext);
+
   const {
     _id,
     title,
@@ -23,7 +26,6 @@ const UpdateTips = () => {
     const formData = new FormData(form);
     const updatedTip = Object.fromEntries(formData.entries());
 
-    // send the updated data to the server
     fetch(`https://green-circle-server-indol.vercel.app/gardenTips/${_id}`, {
       method: "PUT",
       headers: {
@@ -31,33 +33,50 @@ const UpdateTips = () => {
       },
       body: JSON.stringify(updatedTip),
     })
-    .then((res) => res.json())
-    .then(data => {
-        if(data.modifiedCount) {
-            Swal.fire({
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          Swal.fire({
             position: "center",
             icon: "success",
-            title: "Coffee updated successfully.",
+            title: "Tip updated successfully.",
             showConfirmButton: false,
             timer: 1500,
           });
         }
-    })
+      });
   };
 
   return (
-    <div className="min-h-screen  py-16 px-6 sm:px-12 lg:px-20 nunito">
+    <div
+      className={`min-h-screen py-16 px-6 sm:px-12 lg:px-20 nunito ${
+        isDark ? "bg-gray-900 text-green-300" : "bg-green-50 text-green-900"
+      }`}
+    >
       <Helmet>
         <title>Update Garden Tip | Green Circle</title>
       </Helmet>
-      <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
-        <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
+
+      <div
+        className={`max-w-3xl mx-auto rounded-3xl p-12 sm:p-16 shadow-xl border transition-colors ${
+          isDark ? "bg-gray-800 border-gray-700" : "bg-white border-green-200"
+        }`}
+      >
+        <h1
+          className={`text-4xl font-extrabold mb-10 text-center tracking-wide playfair ${
+            isDark ? "text-green-400" : "text-green-900"
+          }`}
+        >
           Update Garden Tip
         </h1>
         <form onSubmit={handleUpdate} className="space-y-8">
           {/* Title */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               Title
             </label>
             <input
@@ -66,13 +85,21 @@ const UpdateTips = () => {
               defaultValue={title}
               required
               placeholder="How I Grow Tomatoes Indoors"
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-2xl border px-6 py-4 placeholder-green-500 focus:outline-none focus:ring-4 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                  : "border-green-400 text-green-900 focus:ring-green-300"
+              }`}
             />
           </div>
 
           {/* Plant Type */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               Plant Type / Topic
             </label>
             <input
@@ -80,21 +107,33 @@ const UpdateTips = () => {
               name="plantType"
               defaultValue={plantType}
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-2xl border px-6 py-4 placeholder-green-500 focus:outline-none focus:ring-4 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                  : "border-green-400 text-green-900 focus:ring-green-300"
+              }`}
             />
           </div>
 
           {/* Difficulty & Category */}
           <div className="grid gap-8 md:grid-cols-2">
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-400" : "text-green-900"
+                }`}
+              >
                 Difficulty Level
               </label>
               <select
                 name="difficulty"
                 required
-                className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
                 defaultValue={difficulty}
+                className={`w-full rounded-2xl border px-6 py-4 focus:outline-none focus:ring-4 shadow-sm transition ${
+                  isDark
+                    ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                    : "border-green-400 text-green-900 focus:ring-green-300"
+                }`}
               >
                 <option value="" disabled>
                   Select difficulty
@@ -106,14 +145,22 @@ const UpdateTips = () => {
             </div>
 
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-400" : "text-green-900"
+                }`}
+              >
                 Category
               </label>
               <select
                 name="category"
                 required
-                className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
                 defaultValue={category}
+                className={`w-full rounded-2xl border px-6 py-4 focus:outline-none focus:ring-4 shadow-sm transition ${
+                  isDark
+                    ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                    : "border-green-400 text-green-900 focus:ring-green-300"
+                }`}
               >
                 <option value="" disabled>
                   Select category
@@ -129,7 +176,11 @@ const UpdateTips = () => {
 
           {/* Description */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               Description
             </label>
             <textarea
@@ -137,14 +188,22 @@ const UpdateTips = () => {
               defaultValue={description}
               rows="6"
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition resize-none"
               placeholder="Write your detailed tip here..."
+              className={`w-full rounded-2xl border px-6 py-4 placeholder-green-500 focus:outline-none focus:ring-4 shadow-sm transition resize-none ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                  : "border-green-400 text-green-900 focus:ring-green-300"
+              }`}
             ></textarea>
           </div>
 
           {/* Image URL */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               Image URL
             </label>
             <input
@@ -153,20 +212,32 @@ const UpdateTips = () => {
               defaultValue={image}
               required
               placeholder="https://example.com/image.jpg"
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-2xl border px-6 py-4 placeholder-green-500 focus:outline-none focus:ring-4 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                  : "border-green-400 text-green-900 focus:ring-green-300"
+              }`}
             />
           </div>
 
           {/* Availability */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               Availability
             </label>
             <select
               name="availability"
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
               defaultValue={availability}
+              className={`w-full rounded-2xl border px-6 py-4 focus:outline-none focus:ring-4 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-300 focus:ring-green-500"
+                  : "border-green-400 text-green-900 focus:ring-green-300"
+              }`}
             >
               <option value="" disabled>
                 Select availability
@@ -179,7 +250,11 @@ const UpdateTips = () => {
           {/* User Info */}
           <div className="grid gap-8 md:grid-cols-2">
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-400" : "text-green-900"
+                }`}
+              >
                 Your Email
               </label>
               <input
@@ -187,12 +262,20 @@ const UpdateTips = () => {
                 name="email"
                 readOnly
                 value={user?.email || ""}
-                className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
+                className={`w-full rounded-2xl px-6 py-4 cursor-not-allowed shadow-inner ${
+                  isDark
+                    ? "bg-gray-700 border border-gray-600 text-green-400"
+                    : "bg-green-100 border border-green-300 text-green-700"
+                }`}
               />
             </div>
 
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-400" : "text-green-900"
+                }`}
+              >
                 Your Name
               </label>
               <input
@@ -200,7 +283,11 @@ const UpdateTips = () => {
                 name="displayName"
                 readOnly
                 value={user?.displayName || ""}
-                className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
+                className={`w-full rounded-2xl px-6 py-4 cursor-not-allowed shadow-inner ${
+                  isDark
+                    ? "bg-gray-700 border border-gray-600 text-green-400"
+                    : "bg-green-100 border border-green-300 text-green-700"
+                }`}
               />
             </div>
           </div>
@@ -211,7 +298,7 @@ const UpdateTips = () => {
               type="submit"
               className="inline-block bg-green-700 hover:bg-green-800 text-white font-bold px-14 py-4 rounded-full shadow-xl transition duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-6 focus:ring-green-400"
             >
-              Updated
+              Update
             </button>
           </div>
         </form>

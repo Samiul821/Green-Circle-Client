@@ -7,19 +7,34 @@ const rowVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const TipRow = ({ tip }) => {
+const TipRow = ({ tip, isDark }) => {
   const { _id, title, category, image } = tip;
 
   return (
     <motion.tr
       variants={rowVariants}
-      whileHover={{ scale: 1.02, backgroundColor: "rgba(220, 252, 231, 0.6)" }}
-      className="border-b border-green-200 cursor-pointer transition-colors duration-200"
+      whileHover={{
+        scale: 1.02,
+        backgroundColor: isDark
+          ? "rgba(34, 197, 94, 0.3)" // Tailwind green-500 with opacity for dark
+          : "rgba(220, 252, 231, 0.6)", // original light hover color
+      }}
+      className={`border-b cursor-pointer transition-colors duration-200 ${
+        isDark ? "border-green-700" : "border-green-200"
+      }`}
     >
-      <td className="px-6 py-4 whitespace-nowrap font-medium text-green-900 font-serif">
+      <td
+        className={`px-6 py-4 whitespace-nowrap font-medium font-serif ${
+          isDark ? "text-green-300" : "text-green-900"
+        }`}
+      >
         {title}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-green-700 font-medium">
+      <td
+        className={`px-6 py-4 whitespace-nowrap font-medium ${
+          isDark ? "text-green-400" : "text-green-700"
+        }`}
+      >
         {category}
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -31,7 +46,13 @@ const TipRow = ({ tip }) => {
             className="w-20 h-20 object-cover rounded-lg"
           />
         ) : (
-          <div className="w-20 h-20 bg-green-100 rounded-lg flex items-center justify-center text-green-400 font-serif">
+          <div
+            className={`w-20 h-20 rounded-lg flex items-center justify-center font-serif ${
+              isDark
+                ? "bg-green-900 text-green-600"
+                : "bg-green-100 text-green-400"
+            }`}
+          >
             No Image
           </div>
         )}

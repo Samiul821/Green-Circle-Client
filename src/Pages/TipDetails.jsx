@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import { ThemeContext } from "../Provider/ThemeContext";
 
 const TipDetails = () => {
   const tip = useLoaderData();
+  const { isDark } = useContext(ThemeContext);
 
   const {
     _id,
@@ -16,8 +18,8 @@ const TipDetails = () => {
     image,
     category,
     availability,
-    likes = 0, 
-  } = tip;
+    likes = 0,
+  } = tip || {};
 
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
@@ -43,7 +45,7 @@ const TipDetails = () => {
         throw new Error("Failed to like tip");
       }
     } catch (err) {
-      toast.error("Failed to like tip. Please try again.", err);
+      toast.error("Failed to like tip. Please try again.");
       setLikeCount(likeCount);
       setLiked(false);
     }
@@ -51,14 +53,22 @@ const TipDetails = () => {
 
   if (!tip) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-green-700 font-semibold">
+      <div
+        className={`min-h-screen flex items-center justify-center font-semibold ${
+          isDark ? "text-green-300 bg-gray-900" : "text-green-700 bg-green-50"
+        }`}
+      >
         Loading tip details...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen  flex items-center justify-center px-6 py-12">
+    <div
+      className={`min-h-screen flex items-center justify-center px-6 py-12 transition-colors duration-500 ${
+        isDark ? "bg-gray-900" : "bg-green-50"
+      }`}
+    >
       <Helmet>
         <title>{title} | Green Circle</title>
       </Helmet>
@@ -66,7 +76,10 @@ const TipDetails = () => {
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="max-w-4xl w-full bg-white backdrop-blur-md bg-opacity-70 rounded-3xl shadow-2xl p-10 relative overflow-hidden"
+        className={`max-w-4xl w-full rounded-3xl shadow-2xl p-10 relative overflow-hidden
+          backdrop-blur-md bg-opacity-70
+          ${isDark ? "bg-gray-800 text-green-300" : "bg-white text-green-900"}
+        `}
       >
         {/* Decorative Circles */}
         <motion.div
@@ -80,7 +93,9 @@ const TipDetails = () => {
             duration: 7,
             ease: "easeInOut",
           }}
-          className="absolute top-[-60px] left-[-60px] w-36 h-36 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className={`absolute top-[-60px] left-[-60px] w-36 h-36 rounded-full mix-blend-multiply filter blur-xl opacity-70 ${
+            isDark ? "bg-green-700" : "bg-green-300"
+          }`}
         />
         <motion.div
           animate={{
@@ -94,7 +109,9 @@ const TipDetails = () => {
             ease: "easeInOut",
             delay: 2,
           }}
-          className="absolute bottom-[-60px] right-[-60px] w-36 h-36 bg-lime-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className={`absolute bottom-[-60px] right-[-60px] w-36 h-36 rounded-full mix-blend-multiply filter blur-xl opacity-70 ${
+            isDark ? "bg-lime-700" : "bg-lime-300"
+          }`}
         />
 
         {/* Content */}
@@ -114,11 +131,19 @@ const TipDetails = () => {
 
           {/* Details */}
           <div className="flex flex-col flex-grow">
-            <h1 className="text-4xl font-serif font-extrabold text-green-900 mb-6">
+            <h1
+              className={`text-4xl font-serif font-extrabold mb-6 ${
+                isDark ? "text-green-400" : "text-green-900"
+              }`}
+            >
               {title}
             </h1>
 
-            <div className="flex flex-wrap gap-6 text-green-700 font-semibold mb-6 text-base">
+            <div
+              className={`flex flex-wrap gap-6 font-semibold mb-6 text-base ${
+                isDark ? "text-green-400" : "text-green-700"
+              }`}
+            >
               <span>
                 <strong>Plant Type:</strong> {plantType}
               </span>
@@ -136,18 +161,24 @@ const TipDetails = () => {
               </span>
             </div>
 
-            <p className="text-green-800 text-lg leading-relaxed mb-8">
+            <p
+              className={`text-lg leading-relaxed mb-8 ${
+                isDark ? "text-green-300" : "text-green-800"
+              }`}
+            >
               {description}
             </p>
             <motion.button
               onClick={handleLike}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`self-start px-8 py-3 rounded-full font-semibold text-white text-lg shadow-lg transition-colors duration-300
+              className={`self-start px-8 py-3 rounded-full font-semibold text-lg shadow-lg transition-colors duration-300
                 ${
                   liked
-                    ? "bg-red-500 hover:bg-red-600"
-                    : "bg-green-600 hover:bg-green-700"
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : isDark
+                    ? "bg-green-700 hover:bg-green-800 text-white"
+                    : "bg-green-600 hover:bg-green-700 text-white"
                 }
               `}
               aria-pressed={liked}

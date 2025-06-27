@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import CustomSlider from "./CustomSlider";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../Provider/ThemeContext";
 
 const Banner = () => {
+  const { isDark } = useContext(ThemeContext);
+
   const fixedText = "Grow your garden with";
   const changingWords = [
     "expert tips",
@@ -13,12 +16,23 @@ const Banner = () => {
   ];
 
   return (
-    <div className="flex flex-col-reverse md:flex-row items-center justify-between h-[65vh] bg-green-100 rounded-3xl overflow-hidden shadow-xl px-6 md:px-16 mb-10">
+    <div
+      className={`flex flex-col-reverse md:flex-row items-center justify-between rounded-3xl overflow-hidden shadow-xl px-4 sm:px-8 md:px-12 lg:px-16 py-10 gap-10 md:gap-0 mb-10
+      ${
+        isDark
+          ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black"
+          : "bg-gradient-to-r from-green-100 via-green-200 to-green-300"
+      }`}
+    >
       {/* Left Side */}
       <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
-        <h1 className="text-3xl md:text-5xl font-extrabold text-green-800 min-h-[4rem]">
-          {fixedText}{" "} <br />
-          <span className="text-green-600">
+        <h1
+          className={`text-2xl sm:text-3xl md:text-5xl font-extrabold ${
+            isDark ? "text-gray-200" : "text-green-800"
+          }`}
+        >
+          {fixedText} <br />
+          <span className={isDark ? "text-green-400" : "text-green-600"}>
             <Typewriter
               words={changingWords}
               loop={0}
@@ -30,20 +44,32 @@ const Banner = () => {
             />
           </span>
         </h1>
-        <p className="text-green-700 max-w-md text-base md:text-lg">
+        <p
+          className={`max-w-md text-base md:text-lg mx-auto md:mx-0 ${
+            isDark ? "text-gray-300" : "text-green-700"
+          }`}
+        >
           Discover a community of passionate gardeners and eco-lovers. Share,
           learn, and grow together.
         </p>
         <Link
           to="/browserTips"
-          className="mt-4 bg-green-600 hover:bg-green-700 transition text-white font-semibold py-3 px-8 rounded-full shadow-lg inline-block"
+          className={`inline-block mt-4 font-semibold py-3 px-8 rounded-full shadow-lg transition
+            ${
+              isDark
+                ? "bg-green-700 hover:bg-green-600 text-gray-100"
+                : "bg-green-600 hover:bg-green-700 text-white"
+            }
+          `}
         >
           Get Started
         </Link>
       </div>
 
-      {/* Right Fixed Image */}
-      <CustomSlider></CustomSlider>
+      {/* Right Side */}
+      <div className="w-full md:w-1/2 flex justify-center items-center">
+        <CustomSlider />
+      </div>
     </div>
   );
 };

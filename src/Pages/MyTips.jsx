@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeContext";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,12 +8,12 @@ import { Helmet } from "react-helmet-async";
 
 const MyTips = () => {
   const { user } = useContext(AuthContext);
+  const { isDark } = useContext(ThemeContext);
   const [myTips, setMyTips] = useState([]);
 
   useEffect(() => {
     if (!user?.email) return;
 
-    console.log("Fetching tips for:", user.email);
     fetch(
       `https://green-circle-server-indol.vercel.app/gardenTips?email=${user.email}`
     )
@@ -23,7 +24,6 @@ const MyTips = () => {
   }, [user?.email]);
 
   const handleDelete = (_id) => {
-    console.log(_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -49,13 +49,18 @@ const MyTips = () => {
           })
           .catch((error) => {
             console.error("Error deleting tip:", error);
+            Swal.fire("Error", "Failed to delete the tip.", "error");
           });
       }
     });
   };
 
   return (
-    <div className="px-[5%] lg:px-[10%] py-12  min-h-screen">
+    <div
+      className={`min-h-screen px-[5%] lg:px-[10%] py-12 ${
+        isDark ? "bg-gray-900 text-green-300" : "bg-green-50 text-green-900"
+      }`}
+    >
       <Helmet>
         <title>
           {myTips.length > 0
@@ -64,12 +69,22 @@ const MyTips = () => {
         </title>
       </Helmet>
 
-      <h1 className="text-4xl playfair font-bold text-green-800 mb-10 text-center">
+      <h1
+        className={`text-4xl playfair font-bold mb-10 text-center ${
+          isDark ? "text-green-400" : "text-green-800"
+        }`}
+      >
         My Gardening Tips
       </h1>
 
       {myTips.length === 0 ? (
-        <p className="text-center text-gray-500">No tips found.</p>
+        <p
+          className={`text-center ${
+            isDark ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          No tips found.
+        </p>
       ) : (
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {myTips.map((tip, index) => (
@@ -82,22 +97,50 @@ const MyTips = () => {
                 ease: "easeOut",
                 delay: index * 0.1,
               }}
-              className="bg-white border border-green-300 shadow-lg p-6 rounded-2xl hover:scale-[1.02] hover:shadow-2xl transition-all duration-300"
+              className={`p-6 rounded-2xl shadow-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
+                isDark
+                  ? "bg-gray-800 border-gray-700"
+                  : "bg-white border-green-300"
+              }`}
               style={{
                 backgroundImage: "url('/garden-pattern.svg')",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
               }}
             >
-              <h2 className="text-2xl raleway font-semibold text-green-700 mb-3">
+              <h2
+                className={`text-2xl raleway font-semibold mb-3 ${
+                  isDark ? "text-green-300" : "text-green-700"
+                }`}
+              >
                 {tip.title}
               </h2>
-              <p className="text-sm nunito text-gray-700 mb-1">
-                <span className="font-medium text-green-600">Category:</span>{" "}
+              <p
+                className={`text-sm nunito mb-1 ${
+                  isDark ? "text-green-400" : "text-gray-700"
+                }`}
+              >
+                <span
+                  className={`font-medium ${
+                    isDark ? "text-green-400" : "text-green-600"
+                  }`}
+                >
+                  Category:
+                </span>{" "}
                 {tip.category}
               </p>
-              <p className="text-sm nunito text-gray-700 mb-4">
-                <span className="font-medium text-green-600">Difficulty:</span>{" "}
+              <p
+                className={`text-sm nunito mb-4 ${
+                  isDark ? "text-green-400" : "text-gray-700"
+                }`}
+              >
+                <span
+                  className={`font-medium ${
+                    isDark ? "text-green-400" : "text-green-600"
+                  }`}
+                >
+                  Difficulty:
+                </span>{" "}
                 {tip.difficulty}
               </p>
               <div className="flex justify-end gap-3 pt-2">

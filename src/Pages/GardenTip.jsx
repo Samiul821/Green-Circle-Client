@@ -1,10 +1,12 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import { ThemeContext } from "../Provider/ThemeContext";
 
 const GardenTip = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { isDark } = useContext(ThemeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,18 +59,38 @@ const GardenTip = () => {
   };
 
   return (
-    <div className="min-h-screen  py-16 px-6 sm:px-12 lg:px-20 nunito">
+    <div
+      className={`min-h-screen py-16 px-6 sm:px-12 lg:px-20 nunito ${
+        isDark ? "bg-gray-900 text-green-300" : "bg-green-50 text-green-900"
+      }`}
+    >
       <Helmet>
         <title>Share a Garden Tip | Green Circle</title>
       </Helmet>
-      <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-12 sm:p-16 border border-green-200">
-        <h1 className="text-4xl font-extrabold text-green-900 mb-10 text-center tracking-wide playfair">
+
+      <div
+        className={`max-w-3xl mx-auto rounded-3xl p-10 border ${
+          isDark
+            ? "bg-gray-800 border-gray-700 shadow-lg"
+            : "bg-white border-green-200 shadow-md"
+        }`}
+      >
+        <h1
+          className={`text-4xl font-extrabold mb-10 text-center tracking-wide playfair ${
+            isDark ? "text-green-400" : "text-green-900"
+          }`}
+        >
           Share a Garden Tip
         </h1>
+
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Title */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-300" : "text-green-900"
+              }`}
+            >
               Title
             </label>
             <input
@@ -76,34 +98,54 @@ const GardenTip = () => {
               name="title"
               required
               placeholder="How I Grow Tomatoes Indoors"
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-xl border px-5 py-3 placeholder-green-500 focus:outline-none focus:ring-2 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                  : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+              }`}
             />
           </div>
 
           {/* Plant Type */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-300" : "text-green-900"
+              }`}
+            >
               Plant Type / Topic
             </label>
             <input
               type="text"
               name="plantType"
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-xl border px-5 py-3 placeholder-green-500 focus:outline-none focus:ring-2 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                  : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+              }`}
             />
           </div>
 
           {/* Difficulty & Category */}
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-300" : "text-green-900"
+                }`}
+              >
                 Difficulty Level
               </label>
               <select
                 name="difficulty"
                 required
-                className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
                 defaultValue=""
+                className={`w-full rounded-xl border px-5 py-3 focus:outline-none focus:ring-2 shadow-sm transition ${
+                  isDark
+                    ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                    : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+                }`}
               >
                 <option value="" disabled>
                   Select difficulty
@@ -115,14 +157,22 @@ const GardenTip = () => {
             </div>
 
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-300" : "text-green-900"
+                }`}
+              >
                 Category
               </label>
               <select
                 name="category"
                 required
-                className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
                 defaultValue=""
+                className={`w-full rounded-xl border px-5 py-3 focus:outline-none focus:ring-2 shadow-sm transition ${
+                  isDark
+                    ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                    : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+                }`}
               >
                 <option value="" disabled>
                   Select category
@@ -138,21 +188,33 @@ const GardenTip = () => {
 
           {/* Description */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-300" : "text-green-900"
+              }`}
+            >
               Description
             </label>
             <textarea
               name="description"
               rows="6"
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition resize-none"
               placeholder="Write your detailed tip here..."
+              className={`w-full rounded-xl border px-5 py-3 placeholder-green-500 focus:outline-none focus:ring-2 shadow-sm transition resize-none ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                  : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+              }`}
             ></textarea>
           </div>
 
           {/* Image URL */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-300" : "text-green-900"
+              }`}
+            >
               Image URL
             </label>
             <input
@@ -160,20 +222,32 @@ const GardenTip = () => {
               name="image"
               required
               placeholder="https://example.com/image.jpg"
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 placeholder-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
+              className={`w-full rounded-xl border px-5 py-3 placeholder-green-500 focus:outline-none focus:ring-2 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                  : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+              }`}
             />
           </div>
 
           {/* Availability */}
           <div>
-            <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+            <label
+              className={`block text-base font-semibold mb-3 raleway ${
+                isDark ? "text-green-300" : "text-green-900"
+              }`}
+            >
               Availability
             </label>
             <select
               name="availability"
               required
-              className="w-full rounded-2xl border border-green-400 px-6 py-4 text-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-sm transition"
               defaultValue=""
+              className={`w-full rounded-xl border px-5 py-3 focus:outline-none focus:ring-2 shadow-sm transition ${
+                isDark
+                  ? "border-gray-600 bg-gray-700 text-green-200 focus:ring-green-400"
+                  : "border-green-400 text-green-900 focus:ring-green-500 bg-white"
+              }`}
             >
               <option value="" disabled>
                 Select availability
@@ -184,9 +258,13 @@ const GardenTip = () => {
           </div>
 
           {/* User Info */}
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-300" : "text-green-900"
+                }`}
+              >
                 Your Email
               </label>
               <input
@@ -194,12 +272,20 @@ const GardenTip = () => {
                 name="email"
                 readOnly
                 value={user?.email || ""}
-                className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
+                className={`w-full rounded-xl px-5 py-3 cursor-not-allowed shadow-inner ${
+                  isDark
+                    ? "bg-gray-700 border-gray-600 text-green-400"
+                    : "bg-green-100 border-green-300 text-green-700"
+                }`}
               />
             </div>
 
             <div>
-              <label className="block text-base font-semibold text-green-900 mb-3 raleway">
+              <label
+                className={`block text-base font-semibold mb-3 raleway ${
+                  isDark ? "text-green-300" : "text-green-900"
+                }`}
+              >
                 Your Name
               </label>
               <input
@@ -207,7 +293,11 @@ const GardenTip = () => {
                 name="displayName"
                 readOnly
                 value={user?.displayName || ""}
-                className="w-full rounded-2xl bg-green-100 border border-green-300 px-6 py-4 text-green-700 cursor-not-allowed shadow-inner"
+                className={`w-full rounded-xl px-5 py-3 cursor-not-allowed shadow-inner ${
+                  isDark
+                    ? "bg-gray-700 border-gray-600 text-green-400"
+                    : "bg-green-100 border-green-300 text-green-700"
+                }`}
               />
             </div>
           </div>
@@ -216,7 +306,7 @@ const GardenTip = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="inline-block bg-green-700 hover:bg-green-800 text-white font-bold px-14 py-4 rounded-full shadow-xl transition duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-6 focus:ring-green-400"
+              className="inline-block bg-green-700 hover:bg-green-800 text-white font-bold px-14 py-4 rounded-full shadow-md transition duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-400"
             >
               Submit Tip
             </button>

@@ -1,13 +1,16 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeContext";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
-  const { createUser, updateUser, setUser, googleLogin } = use(AuthContext);
+  const { createUser, updateUser, setUser, googleLogin } =
+    useContext(AuthContext);
+  const { isDark } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +45,7 @@ const SignUp = () => {
         // Update user profile
         updateUser({ displayName: name, photoURL: photoURL }).then(() => {
           setUser({ ...user, displayName: name, photoURL: photoURL });
-          navigate(location.state || "/", { replace: true });
+          navigate(location.state?.from?.pathname || "/", { replace: true });
         });
 
         const userProfile = {
@@ -64,12 +67,13 @@ const SignUp = () => {
           .then((res) => res.json())
           .then((data) => {
             if (data.insertedId) {
-              toast.success("Sign Up successfully:", data);
+              toast.success("Sign Up successfully!");
             }
           });
       })
       .catch((error) => {
         console.error("Error creating user:", error);
+        toast.error("Failed to create user");
       });
   };
 
@@ -127,7 +131,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen  flex items-center justify-center p-6">
+    <div
+      className={`min-h-screen flex items-center justify-center p-6 transition-colors duration-500 ${
+        isDark ? "bg-gray-900" : "bg-gray-50"
+      }`}
+    >
       <Helmet>
         <title>Sign Up | Green Circle</title>
       </Helmet>
@@ -135,7 +143,10 @@ const SignUp = () => {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6 relative overflow-hidden"
+        className={`w-full max-w-md rounded-2xl shadow-xl p-8 space-y-6 relative overflow-hidden
+          backdrop-blur-md bg-opacity-70
+          ${isDark ? "bg-gray-800 text-green-300" : "bg-white text-gray-900"}
+        `}
       >
         {/* Background floating blobs */}
         <motion.div
@@ -149,7 +160,9 @@ const SignUp = () => {
             duration: 8,
             ease: "easeInOut",
           }}
-          className="absolute top-[-50px] left-[-40px] w-36 h-36 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-60"
+          className={`absolute top-[-50px] left-[-40px] w-36 h-36 rounded-full mix-blend-multiply filter blur-xl opacity-60 ${
+            isDark ? "bg-blue-700" : "bg-blue-300"
+          }`}
         />
         <motion.div
           animate={{
@@ -163,15 +176,21 @@ const SignUp = () => {
             ease: "easeInOut",
             delay: 3,
           }}
-          className="absolute bottom-[-50px] right-[-40px] w-36 h-36 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-60"
+          className={`absolute bottom-[-50px] right-[-40px] w-36 h-36 rounded-full mix-blend-multiply filter blur-xl opacity-60 ${
+            isDark ? "bg-blue-800" : "bg-blue-400"
+          }`}
         />
 
-        <h2 className="text-2xl font-bold text-gray-800 text-center relative z-10">
+        <h2
+          className={`text-2xl font-bold text-center relative z-10 ${
+            isDark ? "text-green-400" : "text-gray-800"
+          }`}
+        >
           Create Account
         </h2>
 
         <form onSubmit={handleSignUp} className="space-y-4 relative z-10">
-          {["name", "email", "photoURL", "password"].map((field, idx) => {
+          {["name", "email", "photoURL", "password"].map((field) => {
             const placeholders = {
               name: "Your Name",
               email: "you@example.com",
@@ -197,7 +216,11 @@ const SignUp = () => {
                 whileFocus={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <label className="block text-sm font-medium text-gray-700">
+                <label
+                  className={`block text-sm font-medium ${
+                    isDark ? "text-green-300" : "text-gray-700"
+                  }`}
+                >
                   {labels[field]}
                 </label>
                 <input
@@ -205,7 +228,14 @@ const SignUp = () => {
                   name={field}
                   placeholder={placeholders[field]}
                   required
-                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+                  className={`mt-1 w-full px-4 py-2 rounded-xl border
+                    focus:outline-none focus:ring-2 transition
+                    ${
+                      isDark
+                        ? "border-green-700 bg-gray-700 text-green-300 placeholder-green-400 focus:ring-green-500 focus:border-green-500"
+                        : "border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-blue-400 focus:border-blue-400"
+                    }
+                  `}
                 />
               </motion.div>
             );
@@ -216,7 +246,13 @@ const SignUp = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
-            className="w-full bg-blue-600 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition-all"
+            className={`w-full rounded-xl py-2 font-semibold transition
+              ${
+                isDark
+                  ? "bg-green-700 hover:bg-green-800 text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }
+            `}
           >
             Sign Up
           </motion.button>
@@ -229,16 +265,31 @@ const SignUp = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
-            className="w-full flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-green-300"
+            className={`w-full flex items-center justify-center gap-3 rounded-xl py-3 font-semibold shadow-lg focus:outline-none focus:ring-4 transition
+              ${
+                isDark
+                  ? "bg-green-700 hover:bg-green-800 text-white focus:ring-green-400"
+                  : "bg-green-600 hover:bg-green-700 text-white focus:ring-green-300"
+              }
+            `}
           >
             <FcGoogle size={20} />
             Sign in with Google
           </motion.button>
         </div>
 
-        <p className="text-sm text-center text-gray-600 relative z-10">
+        <p
+          className={`text-sm text-center relative z-10 ${
+            isDark ? "text-green-400" : "text-gray-600"
+          }`}
+        >
           Already have an account?{" "}
-          <Link to="/auth/login" className="text-blue-600 hover:underline">
+          <Link
+            to="/auth/login"
+            className={`hover:underline font-semibold ${
+              isDark ? "text-green-400" : "text-blue-600"
+            }`}
+          >
             Sign in
           </Link>
         </p>
