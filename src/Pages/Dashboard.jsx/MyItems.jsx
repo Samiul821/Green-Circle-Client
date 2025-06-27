@@ -58,11 +58,7 @@ const MyItems = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen py-4 ${
-        isDark ? "bg-gray-900" : ""
-      }`}
-    >
+    <div className={`min-h-screen py-4 ${isDark ? "bg-gray-900" : ""}`}>
       <Helmet>
         <title>My Tips | Green Circle</title>
       </Helmet>
@@ -125,7 +121,7 @@ const MyItems = () => {
 
               <div className="flex items-center gap-4 pt-3 text-[17px]">
                 <Link
-                  to={`/tips/${item._id}`}
+                  to={`/tipDetails/${item._id}`}
                   title="View"
                   className={`transition ${
                     isDark
@@ -137,7 +133,7 @@ const MyItems = () => {
                 </Link>
 
                 <Link
-                  to={`/dashboard/update-tip/${item._id}`}
+                  to={`/updateTip/${item._id}`}
                   title="Edit"
                   className={`transition ${
                     isDark
