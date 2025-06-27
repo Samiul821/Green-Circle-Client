@@ -72,60 +72,39 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 lg:gap-10 font-semibold text-[17px] items-center">
-          <li>
-            <NavLink
-              to="/"
-              className={`hover:text-yellow-200 transition duration-200 ${
-                isDark ? "text-gray-300" : ""
-              }`}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/explore"
-              className={`hover:text-yellow-200 transition duration-200 ${
-                isDark ? "text-gray-300" : ""
-              }`}
-            >
-              Explore
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/browserTips"
-              className={`hover:text-yellow-200 transition duration-200 ${
-                isDark ? "text-gray-300" : ""
-              }`}
-            >
-              Browser Tips
-            </NavLink>
-          </li>
-          {user && (
-            <>
-              <li>
-                <NavLink
-                  to="/gardentip"
-                  className={`hover:text-yellow-200 transition duration-200 ${
-                    isDark ? "text-gray-300" : ""
-                  }`}
-                >
-                  Share a Tip
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/mytips"
-                  className={`hover:text-yellow-200 transition duration-200 ${
-                    isDark ? "text-gray-300" : ""
-                  }`}
-                >
-                  My Tips
-                </NavLink>
-              </li>
-            </>
-          )}
+          {[
+            { to: "/", label: "Home" },
+            { to: "/explore", label: "Explore" },
+            { to: "/browserTips", label: "Browser Tips" },
+            ...(user
+              ? [
+                  { to: "/gardentip", label: "Share a Tip" },
+                  { to: "/mytips", label: "My Tips" },
+                ]
+              : []),
+          ].map(({ to, label }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                className={({ isActive }) => {
+                  let baseClasses =
+                    "hover:text-yellow-200 transition duration-200";
+                  let darkClass = isDark ? "text-gray-300" : "";
+                  let activeClass = "";
+
+                  if (isActive) {
+                    activeClass = isDark
+                      ? "text-green-300 font-bold"
+                      : "text-green-600 font-bold";
+                  }
+
+                  return `${baseClasses} ${darkClass} ${activeClass}`;
+                }}
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         {/* Theme Toggle Button */}
