@@ -252,8 +252,18 @@ const Navbar = () => {
               >
                 My Tips
               </NavLink>
+
+              {/* এখানে Dashboard লিংক যোগ করো */}
+              <NavLink
+                to="/dashboard"
+                onClick={toggleMenu}
+                className="block hover:text-yellow-200"
+              >
+                Dashboard
+              </NavLink>
             </>
           )}
+
           {user ? (
             <button
               onClick={() => {
