@@ -20,6 +20,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Overview from "../components/Overview";
 import AllItems from "../Pages/Dashboard.jsx/AllItems";
 import MyItems from "../Pages/Dashboard.jsx/MyItems";
+import Profile from "../Pages/Dashboard.jsx/Profile";
 
 const router = createBrowserRouter([
   {
@@ -133,6 +134,10 @@ const router = createBrowserRouter([
       {
         path: "my-items",
         Component: MyItems,
+      },
+      {
+        path: "profile",
+        Component: Profile,
       },
     ],
   },
