@@ -45,7 +45,7 @@ const Profile = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`flex items-center justify-center pt-12 ${
-        isDark ? "bg-gray-900" : "bg-gray-50"
+        isDark ? "bg-gray-900" : ""
       }`}
     >
       <div

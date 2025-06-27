@@ -59,8 +59,8 @@ const MyItems = () => {
 
   return (
     <div
-      className={`min-h-screen py-4 lg:px-[5%] ${
-        isDark ? "bg-gray-900" : "bg-gray-50"
+      className={`min-h-screen py-4 ${
+        isDark ? "bg-gray-900" : ""
       }`}
     >
       <Helmet>

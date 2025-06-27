@@ -31,12 +31,20 @@ const Footer = () => {
         <div className="space-y-3">
           <Link
             to="/"
-            className="flex items-center gap-2 text-2xl font-bold text-green-800 dark:text-lime-400"
+            className={`flex items-center gap-2 text-2xl font-bold ${
+              isDark ? "text-lime-400" : "text-green-800"
+            }`}
           >
-            <FaLeaf className="text-green-600 dark:text-green-400" />
+            <FaLeaf
+              className={`${isDark ? "text-green-400" : "text-green-600"}`}
+            />
             Green Circle
           </Link>
-          <p className="text-sm text-green-700 dark:text-gray-300">
+          <p
+            className={`${
+              isDark ? "text-gray-300" : "text-green-800 font-medium"
+            }`}
+          >
             Growing together with nature. Green Circle is your gardening guide
             and green friend.
           </p>
@@ -44,16 +52,28 @@ const Footer = () => {
 
         {/* Contact Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-3 text-green-900 dark:text-white">
+          <h3
+            className={`${
+              isDark ? "text-white" : "text-green-800"
+            } text-lg font-semibold mb-3`}
+          >
             Contact Us
           </h3>
-          <ul className="text-sm space-y-2">
+          <ul
+            className={`text-sm space-y-2 ${
+              isDark ? "text-lime-300" : "text-green-800"
+            }`}
+          >
             <li className="flex items-center gap-2">
-              <FaPhoneAlt className="text-green-700 dark:text-lime-300" />
+              <FaPhoneAlt
+                className={`${isDark ? "text-lime-300" : "text-green-700"}`}
+              />
               +880 1330 624539
             </li>
             <li className="flex items-center gap-2">
-              <FaEnvelope className="text-green-700 dark:text-lime-300" />
+              <FaEnvelope
+                className={`${isDark ? "text-lime-300" : "text-green-700"}`}
+              />
               support@greencircle.com
             </li>
           </ul>
@@ -61,27 +81,54 @@ const Footer = () => {
 
         {/* Links & Social */}
         <div>
-          <h3 className="text-lg font-semibold mb-3 text-green-900 dark:text-white">
+          <h3
+            className={`${
+              isDark ? "text-white" : "text-green-800"
+            } text-lg font-semibold mb-3`}
+          >
             More
           </h3>
-          <ul className="text-sm space-x-2 mb-4">
-            <Link to="/terms" className="underline dark:text-lime-300">
+          <ul className="text-sm space-x-2 mb-4 flex gap-4">
+            <Link
+              to="/terms"
+              className={`underline ${
+                isDark ? "text-lime-300" : "text-green-800"
+              } font-medium`}
+            >
               Terms & Conditions
             </Link>
-            <Link to="/policy" className="underline dark:text-lime-300">
+            <Link
+              to="/policy"
+              className={`underline ${
+                isDark ? "text-lime-300" : "text-green-800"
+              } font-medium`}
+            >
               Privacy Policy
             </Link>
           </ul>
-          <div className="flex gap-4 text-green-700 dark:text-lime-400 text-xl">
-            <a href="https://www.facebook.com/smsamiul890" target="_blank">
+          <div
+            className={`flex gap-4 text-xl ${
+              isDark ? "text-lime-400" : "text-green-700"
+            }`}
+          >
+            <a
+              href="https://www.facebook.com/smsamiul890"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaFacebookF />
             </a>
-            <a href="https://x.com/SmSamiul890" target="_blank">
+            <a
+              href="https://x.com/SmSamiul890"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaTwitter />
             </a>
             <a
               href="https://www.linkedin.com/in/samiul-islam-40942a34a/"
               target="_blank"
+              rel="noreferrer"
             >
               <FaLinkedin />
             </a>
@@ -91,7 +138,9 @@ const Footer = () => {
 
       <div
         className={`mt-10 border-t pt-4 text-center text-sm ${
-          isDark ? "text-gray-400 border-gray-700" : "text-green-700"
+          isDark
+            ? "text-gray-400 border-gray-700"
+            : "text-green-800 border-green-400"
         }`}
       >
         © {new Date().getFullYear()} Green Circle. All rights reserved.

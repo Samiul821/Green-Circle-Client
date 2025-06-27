@@ -1,15 +1,23 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { GrLogout } from "react-icons/gr";
-import { AiOutlineBars } from "react-icons/ai";
+import {
+  AiOutlineBars,
+  AiOutlineHome,
+  AiOutlineDashboard,
+} from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
+import { GiPlantRoots } from "react-icons/gi";
+import { MdOutlineInventory2 } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
 import { AuthContext } from "../Provider/AuthProvider";
-import { ThemeContext } from "../Provider/ThemeContext"; // <-- Import your ThemeContext
+import { ThemeContext } from "../Provider/ThemeContext";
 import { toast } from "react-toastify";
+import DashboardTopBar from "../Pages/Dashboard.jsx/DashboardTopBar";
 
 const DashboardLayout = () => {
-  const { logOut } = useContext(AuthContext);
-  const { isDark } = useContext(ThemeContext); // <-- use isDark from context
+  const { user, logOut } = useContext(AuthContext);
+  const { isDark, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -29,7 +37,22 @@ const DashboardLayout = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  // Sidebar content with dark mode classes
+  const ThemeToggleSwitch = () => (
+    <button
+      onClick={toggleTheme}
+      aria-label="Toggle Theme"
+      className={`ml-2 px-3 py-1 rounded-full font-semibold focus:outline-none transition
+        ${
+          isDark
+            ? "bg-green-600 text-white hover:bg-green-700"
+            : "bg-green-300 text-green-900 hover:bg-green-400"
+        }
+      `}
+    >
+      {isDark ? "Light Mode" : "Dark Mode"}
+    </button>
+  );
+
   const sidebarContent = (
     <div
       className={`flex flex-col justify-between h-full w-64 shadow-lg z-50 ${
@@ -54,9 +77,7 @@ const DashboardLayout = () => {
           >
             Green
           </span>
-          <span className={`${isDark ? "text-yellow-400" : "text-yellow-400"}`}>
-            Circle
-          </span>
+          <span className="text-yellow-400">Circle</span>
         </NavLink>
         <button className="lg:hidden text-white" onClick={toggleDrawer}>
           <IoMdClose size={24} />
@@ -67,17 +88,33 @@ const DashboardLayout = () => {
       <div className="flex-1 px-3 py-4">
         <ul className="space-y-3">
           {[
-            { to: "/", label: "Home" },
-            { to: "/dashboard", label: "Overview" },
-            { to: "all-tips", label: "All Garden Tips" },
-            { to: "my-items", label: "My Items" },
-          ].map(({ to, label }) => (
+            {
+              to: "/",
+              label: "Home",
+              icon: <AiOutlineHome className="w-5 h-5" />,
+            },
+            {
+              to: "/dashboard",
+              label: "Overview",
+              icon: <AiOutlineDashboard className="w-5 h-5" />,
+            },
+            {
+              to: "all-tips",
+              label: "All Garden Tips",
+              icon: <GiPlantRoots className="w-5 h-5" />,
+            },
+            {
+              to: "my-items",
+              label: "My Items",
+              icon: <MdOutlineInventory2 className="w-5 h-5" />,
+            },
+          ].map(({ to, label, icon }) => (
             <li key={to}>
               <NavLink
                 to={to}
                 end
                 className={({ isActive }) =>
-                  `block px-4 py-2 rounded-lg font-medium transition ${
+                  `flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition ${
                     isActive
                       ? isDark
                         ? "bg-green-700 text-white font-bold"
@@ -88,11 +125,17 @@ const DashboardLayout = () => {
                   }`
                 }
               >
-                {label}
+                {icon}
+                <span>{label}</span>
               </NavLink>
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Theme Toggle */}
+      <div className="px-3 mb-4">
+        <ThemeToggleSwitch />
       </div>
 
       <hr className={isDark ? "border-gray-700" : "border-green-300"} />
@@ -104,7 +147,7 @@ const DashboardLayout = () => {
             <NavLink
               to="profile"
               className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg font-medium transition ${
+                `flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition ${
                   isActive
                     ? isDark
                       ? "bg-blue-700 text-white"
@@ -115,21 +158,21 @@ const DashboardLayout = () => {
                 }`
               }
             >
-              Profile
+              <FaUserCircle className="w-5 h-5" />
+              <span>Profile</span>
             </NavLink>
           </li>
-
           <li>
             <button
               onClick={handleLogout}
-              className={`flex items-center w-full px-4 py-2 rounded-lg transition ${
+              className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg font-medium transition ${
                 isDark
                   ? "text-gray-400 hover:bg-red-700 hover:text-red-400"
                   : "text-gray-600 hover:bg-red-50 hover:text-red-600"
               }`}
             >
               <GrLogout className="w-5 h-5" />
-              <span className="ml-2 font-medium">Logout</span>
+              <span>Logout</span>
             </button>
           </li>
         </ul>
@@ -185,7 +228,7 @@ const DashboardLayout = () => {
 
       {/* Backdrop */}
       {isDrawerOpen && (
-        <div onClick={toggleDrawer} className="fixed inset-0 z-40 lg:hidden " />
+        <div onClick={toggleDrawer} className="fixed inset-0 z-40 lg:hidden" />
       )}
 
       {/* Desktop Sidebar */}
@@ -199,10 +242,11 @@ const DashboardLayout = () => {
 
       {/* Main Content */}
       <div
-        className={`flex-1 lg:ml-64 p-5 transition-colors duration-300 ${
+        className={`flex-1 lg:px-[5%] lg:ml-64 p-5 transition-colors duration-300 ${
           isDark ? "bg-gray-900 text-gray-300" : "bg-green-100 text-gray-800"
         }`}
       >
+        <DashboardTopBar user={user}></DashboardTopBar>
         <Outlet />
       </div>
     </div>
